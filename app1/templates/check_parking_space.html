@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map{
+            max-width: 100%;
+            height: 400px;
+        }
+        .buttons{
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <!-- here using bootstrap we will show available parking space button and get current balance. -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Smart Parking</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+        <!-- /.container -->
+    </nav>
+
+        <div class="container-fluid">
+            <div id="map"></div>
+            <hr />
+            <div class="buttons">
+                <a class="btn btn-primary btn-lg btn-block" href="../check_parking_space/">Available token balance</a>
+            </div>
+            <div class="data-table">
+                <table class="table">
+                    <tr>
+                        <th>Parking Space Name</th>
+                        <th>Slots Available</th>
+                        <th>Rate(SPA/hour)</th>
+                    </tr>
+                    <tr>
+                        <td><a href="../confirm_parking_space/?location_id=1">Tata Starbucks</a></td>
+                        <td>12</td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../confirm_parking_space/?location_id=2">Kormangala Social</a></td>
+                        <td>25</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../confirm_parking_space/?location_id=3">Truffles</a></td>
+                        <td>41</td>
+                        <td>80</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+
+      function getTokenBal(){
+          var api_endpoint = "https://kovan.etherscan.io/api?module=account&action=balance&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a&tag=latest&apikey="
+      }
+
+      var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 14
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Your current location.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+
+            var locations = [
+          ['Tata Starbucks', '12.933043', '77.6134962'],
+          ['Kormangala Social', '12.9349752', '77.6143524'],
+          ['Truffles', '12.9335436', '77.6134145']
+            ];
+
+            var marker, i;
+
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                map: map
+            });
+                var infowindow = new google.maps.InfoWindow();
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0U9MaheSsZpO7a8f_DWVm95hW4z2OhQo&callback=initMap">
+    </script>
+  </body>
+</html>

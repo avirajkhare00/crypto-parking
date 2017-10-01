@@ -1,0 +1,60 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map{
+            max-width: 100%;
+            height: 400px;
+        }
+        .buttons{
+            text-align: center;
+        }
+        .img-area{
+            max-width: 100%;
+            height: 200px;
+        }
+        .container-fluid{
+            padding-top: 80px;
+        }
+        .parking-confirmed{
+            padding-top: 80px;
+            text-align: center;
+            font-size:24px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <!-- here using bootstrap we will show available parking space button and get current balance. -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Smart Parking</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+        <!-- /.container -->
+    </nav>
+
+        <div class="container-fluid">
+            <div class="parking-confirmed">
+                <p>
+                    Your parking is confirmed!
+                </p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
